@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>李鑫 · 数据开发 & AI视觉 · 个人博客</title>
+    <!-- Font Awesome 6 (免费) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- 柔和现代字体 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Inter", system-ui, -apple-system, sans-serif;
+            background: #f4f7fb;
+            color: #1e293b;
+            line-height: 1.5;
+            padding: 2rem 1.5rem;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.7);
+            backdrop-filter: blur(2px);
+            border-radius: 2.5rem;
+            padding: 2.5rem 2rem;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.15);
+            border: 1px solid rgba(255,255,255,0.5);
+        }
+
+        /* 毛玻璃卡片 */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255,255,255,0.6);
+            border-radius: 2rem;
+            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05), 0 8px 10px -6px rgba(0,0,0,0.02);
+            transition: all 0.2s ease;
+        }
+
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.9);
+            border-color: rgba(165, 180, 252, 0.3);
+            box-shadow: 0 20px 30px -12px rgba(79, 70, 229, 0.15);
+        }
+
+        h1, h2, h3 {
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            border-bottom: 2px solid rgba(148, 163, 184, 0.2);
+            padding-bottom: 0.6rem;
+        }
+
+        h2 i {
+            color: #4f46e5;
+            font-size: 1.8rem;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #e0e7ff;
+            color: #3730a3;
+            padding: 0.25rem 1rem;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            border: 1px solid #c7d2fe;
+        }
+
+        /* 头部区域 */
+        .profile-header {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2.5rem;
+            background: linear-gradient(135deg, #ffffff70 0%, #f1f5f9 100%);
+            border-radius: 2rem;
+            padding: 1.8rem 2rem;
+            border: 1px solid #ffffff;
+        }
+
+        .profile-name h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(145deg, #1e1b4b, #312e81);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.1;
+        }
+
+        .profile-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin: 0.8rem 0 0.2rem;
+        }
+
+        .profile-contact {
+            display: flex;
+            gap: 1.8rem;
+            flex-wrap: wrap;
+            background: #ffffffb0;
+            padding: 1rem 1.8rem;
+            border-radius: 60px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .profile-contact i {
+            color: #4f46e5;
+            width: 1.8rem;
+        }
+
+        .profile-contact span {
+            font-weight: 500;
+        }
+
+        /* 网格布局 */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.8rem;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        @media (max-width: 900px) {
+            .grid-2, .grid-3 {
+                grid-template-columns: 1fr;
+            }
+            .profile-header {
+                flex-direction: column;
+                align-items: start;
+                gap: 1rem;
+            }
+        }
+
+        /* 卡片通用 */
+        .card {
+            background: white;
+            border-radius: 1.8rem;
+            padding: 1.8rem;
+            border: 1px solid #ffffff;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.02);
+            transition: 0.15s;
+            height: fit-content;
+        }
+
+        .card:hover {
+            border-color: #cbd5e1;
+        }
+
+        .project-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 0.75rem;
+        }
+
+        .project-title h3 {
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .github-link {
+            background: #f1f5f9;
+            border-radius: 30px;
+            padding: 0.3rem 1rem 0.3rem 0.8rem;
+            font-size: 0.85rem;
+            color: #1e293b;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            border: 1px solid #e2e8f0;
+            transition: 0.1s;
+        }
+
+        .github-link i {
+            font-size: 1rem;
+            color: #0f172a;
+        }
+
+        .github-link:hover {
+            background: #e0e7ff;
+            border-color: #818cf8;
+        }
+
+        .desc {
+            color: #334155;
+            margin: 0.8rem 0 1rem;
+            font-size: 0.95rem;
+        }
+
+        .metrics {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 0.8rem;
+            font-size: 0.85rem;
+            background: #f8fafc;
+            padding: 0.8rem 1rem;
+            border-radius: 1.2rem;
+        }
+
+        .metrics span {
+            background: white;
+            padding: 0.2rem 1rem;
+            border-radius: 40px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .work-item {
+            margin-bottom: 1.8rem;
+        }
+        .work-item h4 {
+            font-size: 1.2rem;
+            display: flex;
+            justify-content: space-between;
+            color: #0f172a;
+        }
+        .work-date {
+            font-weight: 400;
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+        .work-desc {
+            margin-top: 0.3rem;
+            padding-left: 0.5rem;
+            border-left: 3px solid #a5b4fc;
+            color: #334155;
+            font-size: 0.95rem;
+        }
+
+        .award-wall {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .award-card {
+            background: #ffffffcc;
+            backdrop-filter: blur(4px);
+            border: 1px solid white;
+            border-radius: 1.5rem;
+            padding: 1.2rem;
+            display: flex;
+            gap: 0.8rem;
+            align-items: center;
+            box-shadow: 0 4px 8px #00000008;
+            transition: 0.1s;
+            text-decoration: none;
+            color: inherit;
+        }
+        .award-card:hover {
+            background: #ffffffff;
+            border-color: #a5f3fc;
+            transform: scale(1.02);
+            box-shadow: 0 10px 20px -10px #4f46e550;
+        }
+
+        .award-icon {
+            background: #fef9c3;
+            width: 3rem;
+            height: 3rem;
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #854d0e;
+            font-size: 1.6rem;
+            flex-shrink: 0;
+        }
+
+        .award-info p {
+            font-weight: 600;
+            margin-bottom: 0.2rem;
+        }
+        .award-info small {
+            color: #475569;
+        }
+
+        .skill-cloud {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            margin: 1rem 0;
+        }
+        .skill-tag {
+            background: white;
+            border-radius: 40px;
+            padding: 0.5rem 1.2rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 2px 4px #00000008;
+        }
+
+        hr {
+            border: none;
+            height: 1px;
+            background: linear-gradient(to right, #cbd5e1, transparent);
+            margin: 2rem 0;
+        }
+
+        .footer-note {
+            text-align: center;
+            color: #64748b;
+            font-size: 0.9rem;
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px dashed #cbd5e1;
+        }
+
+        .btn-github-follow {
+            background: #0f172a;
+            color: white;
+            border: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: 40px;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+<div class="container glass-card">
+    <!-- 头部简介 -->
+    <div class="profile-header">
+        <div class="profile-name">
+            <h1>李鑫</h1>
+            <div class="profile-tags">
+                <span class="badge"><i class="fas fa-database" style="margin-right: 6px;"></i>数据开发</span>
+                <span class="badge"><i class="fas fa-brain"></i> AI视觉</span>
+                <span class="badge"><i class="fas fa-map-pin"></i> 广州</span>
+                <span class="badge"><i class="fas fa-briefcase"></i> 2年经验</span>
+            </div>
+        </div>
+        <div class="profile-contact">
+            <span><i class="fas fa-phone-alt"></i> 186-6562-9855</span>
+            <span><i class="fas fa-envelope"></i> 2332001741@qq.com</span>
+            <span><i class="fab fa-github"></i> lixin798</span>
+        </div>
+    </div>
+
+    <!-- 个人优势 + 核心数据 -->
+    <div style="margin-bottom: 2rem; background: #eef2ff50; border-radius: 2rem; padding: 1.5rem 2rem; border:1px solid #ffffff;">
+        <p style="font-size: 1.15rem; font-weight: 400; color: #1e293b; max-width: 900px;">
+            <i class="fas fa-quote-left" style="color: #818cf8; margin-right: 6px;"></i>
+            熟练Hadoop/Spark/Flink，具备TB级数据实战经验。获多项省级大数据/AI竞赛一等奖，软著一项。技术落地能力强，追求优雅高效的工程实现。
+        </p>
+    </div>
+
+    <!-- 工作经历 + 重点项目 (两列布局) -->
+    <div class="grid-2" style="margin-bottom: 2rem;">
+        <!-- 左侧：工作经历 -->
+        <div>
+            <h2><i class="fas fa-briefcase"></i> 工作经历</h2>
+            <div class="card">
+                <div class="work-item">
+                    <h4>字节跳动 · 数据标注/AI训练师 <span class="work-date">2024.08 - 2024.12</span></h4>
+                    <div class="work-desc">构建多模态数据标注标准，设计对话逻辑一致性校验；训练噪声降低40%，对话自然度提升35%。</div>
+                </div>
+                <div class="work-item">
+                    <h4>嘀嗒出行 · 数据挖掘 <span class="work-date">2025.03 - 2025.05</span></h4>
+                    <div class="work-desc">基于Python分析消费券与出行距离关联，构建预测模型准确率88%，助力运营效率提升25%。</div>
+                </div>
+                <div class="work-item">
+                    <h4>致诺智能科技 · 售后技术支持 <span class="work-date">2025.08 - 2025.11</span></h4>
+                    <div class="work-desc">SOP全周期管理，流程优化效率+32%，投诉-28%；案例库新增16例，编制《业务能力手册》V2.0。</div>
+                </div>
+            </div>
+            <!-- 教育 -->
+            <h2 style="margin-top: 2rem;"><i class="fas fa-graduation-cap"></i> 教育</h2>
+            <div class="card">
+                <p><strong>广东岭南职业技术学院</strong> · 大数据技术 (实践支撑：机器学习/数据挖掘/分布式系统)</p>
+                <p style="margin-top: 0.6rem; color: #4f46e5;"><i class="fas fa-code"></i> 实训: Hadoop集群、SparkSQL、数据可视化</p>
+            </div>
+        </div>
+
+        <!-- 右侧：重点项目速览 (两个最亮眼) -->
+        <div>
+            <h2><i class="fas fa-microchip"></i> 核心项目</h2>
+            <div class="card" style="margin-bottom: 1.5rem;">
+                <div class="project-title">
+                    <h3><i class="fas fa-eye" style="color: #059669;"></i> 智眸·AI视觉质检先锋</h3>
+                    <!-- 作品报告链接：指向starts文件夹内的docx文件 -->
+                    <a href="starts/《智眸·AI视觉质检先锋》作品报告（AI视觉应用创新挑战赛）.docx" class="github-link" target="_blank"><i class="fas fa-file-word"></i> 作品报告</a>
+                </div>
+                <p class="desc">农产品AI视觉质检，YOLOv5+ResNet50，准确率0.995，召回率1.0，F1=0.996，80 epoch仅1.94h。轻量化部署，区块链溯源。</p>
+                <div class="metrics">
+                    <span>⚡ 准确率 99.5%</span><span>📦 参数量 2.58M</span><span>🕒 80.2ms/图</span>
+                </div>
+            </div>
+            <div class="card">
+                <div class="project-title">
+                    <h3><i class="fas fa-robot" style="color: #2563eb;"></i> 智股天机系统</h3>
+                    <a href="https://github.com/lixin798/-.git" target="_blank" class="github-link"><i class="fab fa-github"></i> GitHub</a>
+                </div>
+                <p class="desc">Flask + NLP + 异步爬虫，金融政策监测，情感分析 + 趋势预测，数据覆盖率>95%，准确率85%。</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 完整项目展示 (grid 3) -->
+    <h2><i class="fas fa-code-branch"></i> 全栈 & 数据工程</h2>
+    <div class="grid-3" style="margin-bottom: 2.5rem;">
+        <!-- campus_portal -->
+        <div class="card">
+            <div class="project-title">
+                <h3><i class="fas fa-university"></i> campus_portal</h3>
+                <a href="https://github.com/lixin798/campus_portal.git" target="_blank" class="github-link"><i class="fab fa-github"></i> repo</a>
+            </div>
+            <p class="desc">Flask+MySQL 大学门户系统，JWT认证，RESTful API，原生响应式前端，适配多终端。</p>
+        </div>
+        <!-- Bunny3D Showcase -->
+        <div class="card">
+            <div class="project-title">
+                <h3><i class="fas fa-cube"></i> Bunny3DShowcase</h3>
+                <a href="https://github.com/lixin798/3Drabbit.git" target="_blank" class="github-link"><i class="fab fa-github"></i> repo</a>
+            </div>
+            <p class="desc">Three.js 苹果风格3D展厅，毛玻璃UI，360°缓动旋转，多光源 + 模型加载进度。</p>
+        </div>
+        <!-- TravelCrawlerPro -->
+        <div class="card">
+            <div class="project-title">
+                <h3><i class="fas fa-globe"></i> TravelCrawlerPro</h3>
+                <a href="https://github.com/lixin798/TravelCrawler-Pro.git" target="_blank" class="github-link"><i class="fab fa-github"></i> GitHub</a>
+            </div>
+            <p class="desc">Scrapy + 旅游数据爬取、可视化，Pandas清洗，反爬处理，酒店/景点数据分析。</p>
+        </div>
+    </div>
+
+    <!-- 软著 + 额外项目: 实战导向数据分析课程开发系统 -->
+    <div style="background: #e6f0ff30; border-radius: 2rem; padding: 1.5rem 2rem; margin-bottom: 2rem; border:1px solid #ffffff;">
+        <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 1.5rem;">
+            <!-- 软著证书链接到starts内的图片 -->
+            <a href="starts/微信图片_2026-02-23_144800_236.png" target="_blank" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 1rem;">
+                <span class="badge" style="background: #312e81; color: white;">软著登字第15492306号</span>
+                <div><i class="fas fa-copyright" style="color: #4f46e5;"></i> <strong>实战导向的数据分析课程开发系统 V1.0</strong> (2025SR0836108) — 李申燕, 李鑫, 王申奥</div>
+            </a>
+        </div>
+        <p style="margin-top: 0.8rem;">融合50+实操案例、自动校验、进度追踪，已用于校内实训，支撑200+学生在线实操。</p>
+    </div>
+
+    <!-- 专业技能 & 荣誉证书混合区 -->
+    <div class="grid-2">
+        <!-- 左侧技能 -->
+        <div>
+            <h2><i class="fas fa-wrench"></i> 专业技能</h2>
+            <div class="card">
+                <div class="skill-cloud">
+                    <span class="skill-tag">Python / Java</span>
+                    <span class="skill-tag">Hadoop (HDFS/YARN)</span>
+                    <span class="skill-tag">Spark / Flink</span>
+                    <span class="skill-tag">Pandas / SparkSQL</span>
+                    <span class="skill-tag">Kafka / Flume</span>
+                    <span class="skill-tag">MySQL / Redis / MongoDB</span>
+                    <span class="skill-tag">Django / Flask</span>
+                    <span class="skill-tag">FineBI / Echarts</span>
+                    <span class="skill-tag">YOLO / OpenCV</span>
+                    <span class="skill-tag">Docker / Airflow</span>
+                </div>
+                <p style="margin-top: 1rem; color: #334155;"><i class="fas fa-check-circle" style="color: #059669;"></i> 大数据全链路开发、集群调优、数据倾斜解决、TB级处理经验。</p>
+            </div>
+        </div>
+        <!-- 右侧证书数量/亮点 (每个卡片都可点击查看对应证书图片，路径加上starts/) -->
+        <div>
+            <h2><i class="fas fa-trophy"></i> 获奖 & 荣誉</h2>
+            <div class="award-wall">
+                <!-- 广东省大学生计算机设计大赛 一等奖 对应图片: starts/微信图片_2026-02-23_144528_170.png -->
+                <a href="starts/微信图片_2026-02-23_144528_170.png" target="_blank" class="award-card">
+                    <div class="award-icon"><i class="fas fa-award"></i></div>
+                    <div class="award-info"><p>AI视觉应用省一</p><small>智眸·AI视觉质检先锋</small></div>
+                </a>
+                <!-- 海峡两岸 对应图片: starts/微信图片_2026-02-23_144821_557.png -->
+                <a href="starts/微信图片_2026-02-23_144821_557.png" target="_blank" class="award-card">
+                    <div class="award-icon"><i class="fas fa-medal"></i></div>
+                    <div class="award-info"><p>海峡两岸计算机创新 省三</p><small>智链财智通</small></div>
+                </a>
+                <!-- 大数据开发省三 对应图片: starts/微信图片_2026-02-23_144733_670.png -->
+                <a href="starts/微信图片_2026-02-23_144733_670.png" target="_blank" class="award-card">
+                    <div class="award-icon"><i class="fas fa-chart-line"></i></div>
+                    <div class="award-info"><p>大数据开发省三</p><small>广东省职业院校技能大赛</small></div>
+                </a>
+                <!-- 数学建模省二 对应图片: starts/微信图片_20260223144419_91_12.jpg -->
+                <a href="starts/微信图片_20260223144419_91_12.jpg" target="_blank" class="award-card">
+                    <div class="award-icon"><i class="fas fa-calculator"></i></div>
+                    <div class="award-info"><p>数学建模省二</p><small>E题交通流量管控</small></div>
+                </a>
+                <!-- 软著 已在上方展示，但也可加入卡片 -->
+                <a href="starts/微信图片_2026-02-23_144800_236.png" target="_blank" class="award-card">
+                    <div class="award-icon"><i class="fas fa-file-code"></i></div>
+                    <div class="award-info"><p>软著一项</p><small>数据分析课程系统</small></div>
+                </a>
+                <!-- 另一个大数据应用技能省三 证书也可指向省三图片 -->
+                <a href="starts/微信图片_2026-02-23_144733_670.png" target="_blank" class="award-card">
+                    <div class="award-icon"><i class="fas fa-users"></i></div>
+                    <div class="award-info"><p>大数据应用技能省三</p><small>广东岭南职院</small></div>
+                </a>
+            </div>
+            <p style="margin-top: 0.8rem; font-size: 0.9rem; color: #475569;"><i class="fas fa-info-circle"></i> 点击卡片查看对应证书扫描件</p>
+        </div>
+    </div>
+
+    <!-- 证书墙 (详细图片文字) 仿证书展示 已经通过上面的award-card实现了点击查看图片，所以可以移除重复区域，但保留作品亮点区域。 -->
+    <hr>
+    <h2><i class="fas fa-file-powerpoint"></i> 《智眸·AI视觉质检先锋》作品亮点</h2>
+    <div class="card" style="background: #ffffff; padding: 2rem;">
+        <div style="display: flex; flex-wrap: wrap; gap: 2.5rem; justify-content: space-between;">
+            <div>
+                <span class="badge" style="background: #4f46e5; color:white;">轻量化</span>
+                <p style="margin-top: 0.5rem;">模型剪枝+INT8: 244MB → 20MB, 硬件成本降70%</p>
+                <span class="badge" style="background: #0f172a; color:white;">小样本</span>
+                <p style="margin-top: 0.5rem;">100张图像适配新品类，3~5天部署</p>
+            </div>
+            <div>
+                <span class="badge" style="background: #059669; color:white;">区块链溯源</span>
+                <p>Hyperledger Fabric，扫码响应<3s，复购+15%</p>
+            </div>
+            <div>
+                <span class="badge" style="background: #b45309; color:white;">国产化率80%</span>
+                <p>PaddlePaddle + 海康威视，适配信创</p>
+            </div>
+            <div>
+                <span class="badge" style="background: #6b21a8; color:white;">效率</span>
+                <p>分拣效率50件/分钟，人工10倍，年省成本163万</p>
+            </div>
+        </div>
+        <!-- 简要测试结果 -->
+        <div style="background: #f1f5f9; border-radius: 2rem; padding: 1.5rem; margin-top: 1.5rem;">
+            <i class="fas fa-flask"></i> 对照实验：数据规模100→10000张，准确率60%→92%，新增缺陷检测率30%→89%
+        </div>
+    </div>
+
+    <!-- GitHub 综合链接 + 更多项目 -->
+    <div style="display: flex; flex-wrap: wrap; gap: 1.2rem; justify-content: center; margin: 2.5rem 0 1rem;">
+        <a href="https://github.com/lixin798" target="_blank" class="btn-github-follow"><i class="fab fa-github"></i> Follow @lixin798</a>
+        <a href="https://github.com/lixin798/3Drabbit.git" target="_blank" class="github-link" style="padding:0.7rem 1.5rem;"><i class="fab fa-github"></i> Bunny3D</a>
+        <a href="https://github.com/lixin798/campus_portal.git" target="_blank" class="github-link" style="padding:0.7rem 1.5rem;"><i class="fab fa-github"></i> campus_portal</a>
+        <a href="https://github.com/lixin798/-.git" target="_blank" class="github-link" style="padding:0.7rem 1.5rem;"><i class="fab fa-github"></i> 智股天机</a>
+        <a href="https://github.com/lixin798/TravelCrawler-Pro.git" target="_blank" class="github-link" style="padding:0.7rem 1.5rem;"><i class="fab fa-github"></i> TravelCrawler</a>
+    </div>
+
+    <div class="footer-note">
+        ✦ 基于真实简历、获奖证书、项目报告构建 ✦ 数据开发 / AI视觉探索 ✦ 设计语言：苹果风格毛玻璃 ✦ 2026 <br>
+        <span style="font-size:0.8rem;">✨ 点击证书卡片可查看原图，点击“作品报告”可打开Word文档 (所有资源位于 starts/ 文件夹)</span>
+    </div>
+</div>
+<!-- 小脚本：提示外部链接跳转 -->
+<script>
+    (function() {
+        // 使所有.github-link在新标签打开，外部链接安全
+        const links = document.querySelectorAll('a[href^="http"]:not([href*="javascript"])');
+        links.forEach(link => {
+            if (!link.getAttribute('target')) {
+                link.setAttribute('target', '_blank');
+            }
+        });
+    })();
+</script>
+</body>
+</html>
